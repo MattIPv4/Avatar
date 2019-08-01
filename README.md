@@ -39,9 +39,11 @@ All the current rendered avatar files follow a simple naming scheme to make them
 | T | Transparent Background |
 | W | White Background |
 | -- | -- |
+| G | Goggles |
 | B | Blue Skin Version |
-| A | Arms - Laptop & Goggles |
+| A | Arms Holding Laptop & Goggles |
 | C | Christmas Hat Edition |
+| S | Grey-scale (Desaturated) |
 
 
 <!-- Contributing -->
