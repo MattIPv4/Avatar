@@ -127,10 +127,16 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_w\_c.png](head/white/head_w_c.png)
    - 📂 __header__
      - 📄 [header.png](header/header.png)
-     - 📄 [header\_s.png](header/header_s.png)
+     - 📂 __parts__
+       - 📄 [cubes\-single.svg](header/parts/cubes-single.svg)
+       - 📄 [cubes\-stacked.svg](header/parts/cubes-stacked.svg)
+       - 📄 [screen.svg](header/parts/screen.svg)
      - 📂 __v1__
        - 📄 [header.png](header/v1/header.png)
        - 📄 [header\_s.png](header/v1/header_s.png)
+     - 📂 __v2__
+       - 📄 [header.png](header/v2/header.png)
+       - 📄 [header\_s.png](header/v2/header_s.png)
    - 📂 __theatre__
      - 📂 __bw__
        - 📄 [theatre\-bw\-t.png](theatre/bw/theatre-bw-t.png)
