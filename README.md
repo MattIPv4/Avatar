@@ -51,6 +51,8 @@ All the current rendered avatar files follow a simple naming scheme to make them
 ## Files
 
 <!-- Generated with https://github.com/michalbe/md-file-tree -->
+<!-- Only png, gif & svg files are shown here -->
+<!-- The entire 'old' & 'source' directories are ignored -->
 
 - 📂 __Avatar__
    - 📂 __full__
@@ -89,6 +91,9 @@ All the current rendered avatar files follow a simple naming scheme to make them
          - 📄 [full\_w\_g\_b\_c.png](full/white/goggles/full_w_g_b_c.png)
          - 📄 [full\_w\_g\_c.png](full/white/goggles/full_w_g_c.png)
    - 📂 __head__
+     - 📂 __anim__
+       - 📄 [Export.gif](head/anim/Export.gif)
+       - 📄 [cog.png](head/anim/cog.png)
      - 📂 __dark__
        - 📂 __goggles__
          - 📄 [head\_d\_g.png](head/dark/goggles/head_d_g.png)
@@ -125,18 +130,31 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_w\_b.png](head/white/head_w_b.png)
        - 📄 [head\_w\_b\_c.png](head/white/head_w_b_c.png)
        - 📄 [head\_w\_c.png](head/white/head_w_c.png)
+     - 📂 __xmas\-anim__
+       - 📄 [Export.gif](head/xmas-anim/Export.gif)
+       - 📄 [frost\-1.png](head/xmas-anim/frost-1.png)
+       - 📄 [snowflake.png](head/xmas-anim/snowflake.png)
    - 📂 __header__
      - 📄 [header.png](header/header.png)
-     - 📂 __parts__
-       - 📄 [cubes\-single.svg](header/parts/cubes-single.svg)
-       - 📄 [cubes\-stacked.svg](header/parts/cubes-stacked.svg)
-       - 📄 [screen.svg](header/parts/screen.svg)
      - 📂 __v1__
        - 📄 [header.png](header/v1/header.png)
        - 📄 [header\_s.png](header/v1/header_s.png)
      - 📂 __v2__
        - 📄 [header.png](header/v2/header.png)
        - 📄 [header\_s.png](header/v2/header_s.png)
+     - 📂 __v3__
+       - 📄 [header.png](header/v3/header.png)
+       - 📂 __parts__
+         - 📄 [cubes\-single.svg](header/v3/parts/cubes-single.svg)
+         - 📄 [cubes\-stacked.svg](header/v3/parts/cubes-stacked.svg)
+         - 📄 [screen.svg](header/v3/parts/screen.svg)
+   - 📂 __professional__
+     - 📄 [mic\-bw.png](professional/mic-bw.png)
+     - 📄 [mic.png](professional/mic.png)
+     - 📄 [normal\-bw.png](professional/normal-bw.png)
+     - 📄 [normal.png](professional/normal.png)
+     - 📄 [split\-bw.png](professional/split-bw.png)
+     - 📄 [split.png](professional/split.png)
    - 📂 __theatre__
      - 📂 __bw__
        - 📄 [theatre\-bw\-t.png](theatre/bw/theatre-bw-t.png)
