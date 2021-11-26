@@ -14,10 +14,10 @@ so these are all the places that need updating each year.
 | https://www.reddit.com/settings/profile | Dark, Goggles         |
 | https://www.twitch.tv/settings/profile  | Dark, Goggles         |
 | https://github.com/settings/profile     | None set (_Gravatar_) |
-| Discord                                 | Dark, Goggles         |
+| Discord                                 | Animated              |
 | Discord: IPv4's Lounge                  | Dark, Goggles         |
 | Discord: Testing                        | Dark, Goggles, Blue   |
-| Slack: cdnjs                            | Dark, No Goggles      |
+| Slack: cdnjs                            | None set (_Gravatar_) |
 | Slack: DigitalOcean                     | White, No Goggles     |
 | Slack: MattIPv4's Lounge                | None set (_Gravatar_) |
 | Slack: Trust                            | None set (_Gravatar_) |
