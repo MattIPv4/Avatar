@@ -88,12 +88,10 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_t\_g.png](head/transp/head_t_g.png)
        - 📄 [head\_t\_g\_c.png](head/transp/head_t_g_c.png)
      - 📂 __xmas\-anim__
-       - 📄 [Export Single.png](head/xmas-anim/Export%20Single.png)
-       - 📄 [Export.gif](head/xmas-anim/Export.gif)
-       - 📄 [background.png](head/xmas-anim/background.png)
-       - 📄 [head\-xmas\-anim.aep](head/xmas-anim/head-xmas-anim.aep)
-       - 📄 [snowflake.png](head/xmas-anim/snowflake.png)
-       - 📄 [snowflake.svg](head/xmas-anim/snowflake.svg)
+       - 📄 [anim.fig](head/xmas-anim/anim.fig)
+       - 📄 [anim.gif](head/xmas-anim/anim.gif)
+       - 📄 [base.png](head/xmas-anim/base.png)
+       - 📄 [base.svg](head/xmas-anim/base.svg)
    - 📂 __header__
      - 📄 [header\-xmas.png](header/header-xmas.png)
      - 📄 [header.fig](header/header.fig)
