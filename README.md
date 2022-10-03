@@ -90,16 +90,21 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [anim.gif](head/anim/anim.gif)
        - 📄 [base.png](head/anim/base.png)
        - 📄 [base.svg](head/anim/base.svg)
+       - 📂 __halloween__
+         - 📄 [anim.fig](head/anim/halloween/anim.fig)
+         - 📄 [anim.gif](head/anim/halloween/anim.gif)
+         - 📄 [base.png](head/anim/halloween/base.png)
+         - 📄 [base.svg](head/anim/halloween/base.svg)
+       - 📂 __xmas__
+         - 📄 [anim.fig](head/anim/xmas/anim.fig)
+         - 📄 [anim.gif](head/anim/xmas/anim.gif)
+         - 📄 [base.png](head/anim/xmas/base.png)
+         - 📄 [base.svg](head/anim/xmas/base.svg)
      - 📂 __dark__
        - 📄 [head\_d\_g.png](head/dark/head_d_g.png)
        - 📄 [head\_d\_g\_b.png](head/dark/head_d_g_b.png)
        - 📄 [head\_d\_g\_b\_c.png](head/dark/head_d_g_b_c.png)
        - 📄 [head\_d\_g\_c.png](head/dark/head_d_g_c.png)
-     - 📂 __halloween\-anim__
-       - 📄 [anim.fig](head/halloween-anim/anim.fig)
-       - 📄 [anim.gif](head/halloween-anim/anim.gif)
-       - 📄 [base.png](head/halloween-anim/base.png)
-       - 📄 [base.svg](head/halloween-anim/base.svg)
      - 📄 [head\_pride\_g.png](head/head_pride_g.png)
      - 📂 __light__
        - 📄 [head\_l\_g.png](head/light/head_l_g.png)
@@ -111,11 +116,6 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_t\_g\_b.png](head/transp/head_t_g_b.png)
        - 📄 [head\_t\_g\_b\_c.png](head/transp/head_t_g_b_c.png)
        - 📄 [head\_t\_g\_c.png](head/transp/head_t_g_c.png)
-     - 📂 __xmas\-anim__
-       - 📄 [anim.fig](head/xmas-anim/anim.fig)
-       - 📄 [anim.gif](head/xmas-anim/anim.gif)
-       - 📄 [base.png](head/xmas-anim/base.png)
-       - 📄 [base.svg](head/xmas-anim/base.svg)
    - 📂 __header__
      - 📄 [header\-xmas.png](header/header-xmas.png)
      - 📄 [header.fig](header/header.fig)
