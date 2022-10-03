@@ -51,6 +51,7 @@ All the current rendered avatar files follow a simple naming scheme to make them
 ## Files
 
 <!-- Generated with https://github.com/michalbe/md-file-tree -->
+<!-- npx -y md-file-tree -e -->
 <!-- Ignores CNAME, *.md -->
 
 - 📂 __Avatar__
@@ -94,6 +95,11 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_d\_g\_b.png](head/dark/head_d_g_b.png)
        - 📄 [head\_d\_g\_b\_c.png](head/dark/head_d_g_b_c.png)
        - 📄 [head\_d\_g\_c.png](head/dark/head_d_g_c.png)
+     - 📂 __halloween\-anim__
+       - 📄 [anim.fig](head/halloween-anim/anim.fig)
+       - 📄 [anim.gif](head/halloween-anim/anim.gif)
+       - 📄 [base.png](head/halloween-anim/base.png)
+       - 📄 [base.svg](head/halloween-anim/base.svg)
      - 📄 [head\_pride\_g.png](head/head_pride_g.png)
      - 📂 __light__
        - 📄 [head\_l\_g.png](head/light/head_l_g.png)
