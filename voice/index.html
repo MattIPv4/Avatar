@@ -1,0 +1,173 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Voice-responsive Avatar</title>
+
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            background: #14151a;
+            position: relative;
+        }
+
+        html,
+        body,
+        main {
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            transition-property: filter, transform;
+            transition-duration: 0s;
+        }
+
+        main.inactive {
+            filter: brightness(0.8);
+            transform-origin: 50% 50%;
+            transition-duration: 0.2s;
+        }
+
+        main img#active {
+            transition-property: opacity;
+            transition-duration: 0s;
+        }
+
+        main.inactive img#active {
+            transition-duration: 0.1s;
+        }
+
+        main img {
+            position: absolute;
+            top: 15vh;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 400vh;
+            object-fit: contain;
+            object-position: center top;
+            filter:
+                    drop-shadow(0px 2vh 0px #fff)
+                    drop-shadow(2vh 0px 0px #fff)
+                    drop-shadow(0px -2vh 0px #fff)
+                    drop-shadow(-2vh 0px 0px #fff)
+                    drop-shadow(0px 0px 10vh #000);
+        }
+
+        footer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                    radial-gradient(at 35% 30%, #0069ff 0, transparent 60%),
+                    radial-gradient(at 80% 65%, #0069ff 0, transparent 55%);
+            filter: blur(50px);
+            opacity: 0.25;
+            z-index: 0;
+        }
+
+        footer::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                    radial-gradient(at 30% 80%, #0069ff 0, transparent 60%),
+                    radial-gradient(at 70% 50%, #0069ff 0, transparent 55%);
+            opacity: 0;
+            animation: blob-fade 10s infinite alternate;
+        }
+
+        @keyframes blob-fade {
+            0% {
+                opacity:0
+            }
+            10% {
+                opacity:0
+            }
+            90% {
+                opacity:1
+            }
+            to {
+                opacity:1
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <img id="inactive" src="../vector/full_g.svg" alt="" />
+    <img id="active" src="../vector/full_g_a.svg" alt="" />
+</main>
+
+<footer></footer>
+
+<script>
+    const volumeThreshold = 0.15;
+    const volumeScaleFactor = 0.1;
+    const bufferFrames = 15;
+    const inactiveScale = 0.8;
+
+    const start = async () => {
+        // Get our DOM elements
+        const elementMain = document.getElementsByTagName('main')[0];
+        const elementActive = document.getElementById('active');
+        const elementInactive = document.getElementById('inactive');
+
+        // Create the audio stream
+        const audio = new AudioContext();
+        const analyzer = audio.createAnalyser();
+        analyzer.fftSize = 128;
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const source = audio.createMediaStreamSource(stream);
+        source.connect(analyzer);
+
+        const data = new Uint8Array(analyzer.frequencyBinCount);
+        const buffer = [];
+
+        const tick = () => {
+            // Get an average volume of frequencies in this frame
+            analyzer.getByteFrequencyData(data);
+            const total = data.reduce((sum, item) => sum + item, 0);
+            const volume = total / data.length / 100;
+
+            // Get an average volume across the last few frames
+            buffer.push(volume);
+            while (buffer.length > bufferFrames) buffer.shift();
+            const buffered = buffer.reduce((sum, item) => sum + item, 0) / buffer.length;
+
+            // Decide what to do with the avatar
+            if (buffered > volumeThreshold) {
+                elementMain.style.transform = `scale(${1 + (volume * volumeScaleFactor)})`;
+                elementMain.className = '';
+                elementActive.style.opacity = 1;
+                elementInactive.style.opacity = 0;
+            } else {
+                elementMain.style.transform = `scale(${inactiveScale})`;
+                elementMain.className = 'inactive';
+                elementActive.style.opacity = 0;
+                elementInactive.style.opacity = 1;
+            }
+
+            window.requestAnimationFrame(tick);
+        };
+        window.requestAnimationFrame(tick);
+    };
+
+    start();
+</script>
+</body>
+</html>

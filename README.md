@@ -52,7 +52,7 @@ All the current rendered avatar files follow a simple naming scheme to make them
 
 <!-- Generated with https://github.com/michalbe/md-file-tree -->
 <!-- npx -y md-file-tree -e -->
-<!-- Ignores CNAME, *.md -->
+<!-- Ignores CNAME, *.md, *.html -->
 
 - 📂 __Avatar__
    - 📄 [avatar.fig](avatar.fig)
