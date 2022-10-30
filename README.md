@@ -47,6 +47,7 @@ All the current rendered avatar files follow a simple naming scheme to make them
 | b | Blue Skin Version |
 | a | Arms Holding Laptop & Goggles |
 | c | Christmas Hat Edition |
+| m | Open Mouth |
 
 ## Files
 
@@ -153,6 +154,11 @@ All the current rendered avatar files follow a simple naming scheme to make them
        - 📄 [head\_o\_g\_b.svg](vector/outline/head_o_g_b.svg)
        - 📄 [head\_o\_g\_b\_c.svg](vector/outline/head_o_g_b_c.svg)
        - 📄 [head\_o\_g\_c.svg](vector/outline/head_o_g_c.svg)
+   - 📂 __voice__
+     - 📄 [voice\_o\_g.svg](voice/voice_o_g.svg)
+     - 📄 [voice\_o\_g\_c.svg](voice/voice_o_g_c.svg)
+     - 📄 [voice\_o\_g\_c\_m.svg](voice/voice_o_g_c_m.svg)
+     - 📄 [voice\_o\_g\_m.svg](voice/voice_o_g_m.svg)
 
 <!-- Contributing -->
 ## Contributing
