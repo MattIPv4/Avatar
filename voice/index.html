@@ -6,125 +6,126 @@
     <title>Voice-responsive Avatar</title>
 
     <style>
+        :root {
+            --avatar-height: 180vh;
+            --avatar-top-offset: 10vh;
+            --avatar-inactive-brightness: 0.8;
+            --avatar-bounce-speed: 0.1s;
+            --avatar-bounce-offset: -10vh;
+        }
+
         html,
         body {
             overflow: hidden;
             background: #14151a;
             position: relative;
-        }
-
-        html,
-        body,
-        main {
             padding: 0;
             margin: 0;
             width: 100vw;
             height: 100vh;
         }
 
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
         main {
+            height: calc(var(--avatar-height) + var(--avatar-top-offset));
             position: relative;
             z-index: 1;
-            transition-property: filter, transform;
-            transition-duration: 0s;
+            will-change: top;
         }
 
-        main.inactive {
-            filter: brightness(0.8);
-            transform-origin: 50% 50%;
-            transition-duration: 0.2s;
-        }
-
-        main img#active {
-            transition-property: opacity;
-            transition-duration: 0s;
-        }
-
-        main.inactive img#active {
-            transition-duration: 0.1s;
+        main.active {
+            animation: bounce var(--avatar-bounce-speed) linear;
         }
 
         main img {
             position: absolute;
-            top: 15vh;
+            top: var(--avatar-top-offset);
             left: 0;
             right: 0;
             width: 100%;
-            height: 400vh;
+            height: var(--avatar-height);
             object-fit: contain;
             object-position: center top;
-            filter:
-                    drop-shadow(0px 2vh 0px #fff)
-                    drop-shadow(2vh 0px 0px #fff)
-                    drop-shadow(0px -2vh 0px #fff)
-                    drop-shadow(-2vh 0px 0px #fff)
-                    drop-shadow(0px 0px 10vh #000);
-        }
-
-        footer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                    radial-gradient(at 35% 30%, #0069ff 0, transparent 60%),
-                    radial-gradient(at 80% 65%, #0069ff 0, transparent 55%);
-            filter: blur(50px);
-            opacity: 0.25;
-            z-index: 0;
-        }
-
-        footer::before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                    radial-gradient(at 30% 80%, #0069ff 0, transparent 60%),
-                    radial-gradient(at 70% 50%, #0069ff 0, transparent 55%);
             opacity: 0;
-            animation: blob-fade 10s infinite alternate;
         }
 
-        @keyframes blob-fade {
+        main img:nth-child(1) {
+            filter: brightness(var(--avatar-inactive-brightness));
+        }
+
+        main.inactive img:nth-child(1) {
+            opacity: 1;
+        }
+
+        main.active img:nth-child(2) {
+            opacity: 1;
+        }
+
+        @keyframes bounce {
             0% {
-                opacity:0
+                top: 0;
             }
-            10% {
-                opacity:0
+
+            50% {
+                top: var(--avatar-bounce-offset);
             }
-            90% {
-                opacity:1
-            }
-            to {
-                opacity:1
+
+            100% {
+                top: 0;
             }
         }
     </style>
 </head>
 <body>
-<main>
-    <img id="inactive" src="../vector/full_g.svg" alt="" />
-    <img id="active" src="../vector/full_g_a.svg" alt="" />
+<canvas></canvas>
+
+<main tabindex="-1">
+    <img src="./voice_o_g.svg" />
+    <img src="./voice_o_g_m.svg" />
 </main>
 
-<footer></footer>
-
 <script>
-    const volumeThreshold = 0.15;
-    const volumeScaleFactor = 0.1;
-    const bufferFrames = 15;
-    const inactiveScale = 0.8;
+    let volumeThreshold = 0.25;
+    const bufferFrames = 3;
+    const activeThreshold = 3; // Frames of active before switching to active
+    const inactiveThreshold = 15; // Frames of inactive before switching to inactive
 
     const start = async () => {
+        document.body.removeEventListener('click', start);
+
         // Get our DOM elements
         const elementMain = document.getElementsByTagName('main')[0];
-        const elementActive = document.getElementById('active');
-        const elementInactive = document.getElementById('inactive');
+        const elementCanvas = document.getElementsByTagName('canvas')[0];
+
+        // Initial values
+        let muted = false;
+        let active = false;
+        let activeCount = 0;
+        let inactiveCount = 0;
+        elementMain.className = 'inactive';
+
+        // Allow for mute/threshold control
+        elementMain.focus();
+        elementMain.addEventListener('keydown',  e => {
+            if (e.key === 'ArrowUp') volumeThreshold += 0.01;
+            if (e.key === 'ArrowDown') volumeThreshold -= 0.01;
+            if (e.key === ' ') muted = !muted;
+        })
+
+        // Ensure canvas is correct sized
+        const canvasRect = elementCanvas.getBoundingClientRect();
+        elementCanvas.width = canvasRect.width;
+        elementCanvas.height = canvasRect.height;
 
         // Create the audio stream
         const audio = new AudioContext();
@@ -139,35 +140,61 @@
         const buffer = [];
 
         const tick = () => {
+            window.requestAnimationFrame(tick);
+
             // Get an average volume of frequencies in this frame
             analyzer.getByteFrequencyData(data);
-            const total = data.reduce((sum, item) => sum + item, 0);
-            const volume = total / data.length / 100;
+            const volume = muted ? 0 : data.reduce((sum, item) => sum + item, 0) / data.length / 100;
 
             // Get an average volume across the last few frames
             buffer.push(volume);
             while (buffer.length > bufferFrames) buffer.shift();
             const buffered = buffer.reduce((sum, item) => sum + item, 0) / buffer.length;
 
-            // Decide what to do with the avatar
-            if (buffered > volumeThreshold) {
-                elementMain.style.transform = `scale(${1 + (volume * volumeScaleFactor)})`;
-                elementMain.className = '';
-                elementActive.style.opacity = 1;
-                elementInactive.style.opacity = 0;
-            } else {
-                elementMain.style.transform = `scale(${inactiveScale})`;
-                elementMain.className = 'inactive';
-                elementActive.style.opacity = 0;
-                elementInactive.style.opacity = 1;
+            // Render current volume and threshold
+            const ctx = elementCanvas.getContext('2d');
+            ctx.clearRect(0, 0, elementCanvas.width, elementCanvas.height);
+            ctx.font = '16px serif';
+            ctx.fillStyle = '#ff0';
+            ctx.fillText(`${muted ? '[muted]' : buffered.toFixed(3)} / ${volumeThreshold.toFixed(2)}`, 10, 20);
+
+            // If we're active and continue to be, ensure counter is reset
+            if (active && buffered > volumeThreshold) {
+                inactiveCount = 0;
             }
 
-            window.requestAnimationFrame(tick);
+            // If we're active and shouldn't be, count and maybe update
+            else if (active && buffered < volumeThreshold) {
+                inactiveCount++;
+
+                if (inactiveCount > inactiveThreshold) {
+                    inactiveCount = 0;
+                    active = false;
+                    elementMain.className = 'inactive';
+                }
+            }
+
+            // If we're inactive and continue to be, ensure counter is reset
+            else if (!active && buffered < volumeThreshold) {
+                activeCount = 0;
+            }
+
+            // If we're inactive and shouldn't be, count and maybe update
+            else if (!active && buffered > volumeThreshold) {
+                activeCount++;
+
+                if (activeCount > activeThreshold) {
+                    activeCount = 0;
+                    active = true;
+                    elementMain.className = 'active';
+                }
+            }
         };
+
         window.requestAnimationFrame(tick);
     };
 
-    start();
+    document.body.addEventListener('click', start);
 </script>
 </body>
 </html>
