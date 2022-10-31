@@ -47,6 +47,10 @@
             animation: bounce var(--avatar-bounce-speed) linear;
         }
 
+        main.muted {
+            filter: grayscale(1);
+        }
+
         main img {
             position: absolute;
             top: var(--avatar-top-offset);
@@ -57,6 +61,7 @@
             object-fit: contain;
             object-position: center top;
             opacity: 0;
+            will-change: opacity;
         }
 
         main img:nth-child(1) {
@@ -95,10 +100,10 @@
 </main>
 
 <script>
-    let volumeThreshold = 0.25;
-    const bufferFrames = 3;
-    const activeThreshold = 3; // Frames of active before switching to active
-    const inactiveThreshold = 15; // Frames of inactive before switching to inactive
+    let volumeThreshold = 0.5;
+    const bufferFrames = 1; // Frames of audio to average to get current volume
+    const activeThreshold = 3; // Frames above threshold before switching to active
+    const inactiveThreshold = 15; // Frames below threshold before switching to inactive
 
     const start = async () => {
         document.body.removeEventListener('click', start);
@@ -108,6 +113,8 @@
         const elementCanvas = document.getElementsByTagName('canvas')[0];
 
         // Initial values
+        let debug = true;
+        let flipped = false;
         let muted = false;
         let active = false;
         let activeCount = 0;
@@ -119,7 +126,18 @@
         elementMain.addEventListener('keydown',  e => {
             if (e.key === 'ArrowUp') volumeThreshold += 0.01;
             if (e.key === 'ArrowDown') volumeThreshold -= 0.01;
-            if (e.key === ' ') muted = !muted;
+            if (e.key === 'ArrowLeft') {
+                debug = !debug;
+                elementCanvas.style.display = debug ? 'block' : 'none';
+            }
+            if (e.key === 'ArrowRight') {
+                flipped = !flipped;
+                document.body.style.transform = flipped ? 'scaleX(-1)' : '';
+            }
+            if (e.key === ' ') {
+                muted = !muted;
+                elementMain.classList[muted ? 'add' : 'remove']('muted');
+            }
         })
 
         // Ensure canvas is correct sized
@@ -152,11 +170,13 @@
             const buffered = buffer.reduce((sum, item) => sum + item, 0) / buffer.length;
 
             // Render current volume and threshold
-            const ctx = elementCanvas.getContext('2d');
-            ctx.clearRect(0, 0, elementCanvas.width, elementCanvas.height);
-            ctx.font = '16px serif';
-            ctx.fillStyle = '#ff0';
-            ctx.fillText(`${muted ? '[muted]' : buffered.toFixed(3)} / ${volumeThreshold.toFixed(2)}`, 10, 20);
+            if (debug) {
+                const ctx = elementCanvas.getContext('2d');
+                ctx.clearRect(0, 0, elementCanvas.width, elementCanvas.height);
+                ctx.font = '16px monospace';
+                ctx.fillStyle = '#ff0';
+                ctx.fillText(`${muted ? '[muted]' : buffered.toFixed(3)} / ${volumeThreshold.toFixed(2)}`, 10, 20);
+            }
 
             // If we're active and continue to be, ensure counter is reset
             if (active && buffered > volumeThreshold) {
@@ -170,7 +190,8 @@
                 if (inactiveCount > inactiveThreshold) {
                     inactiveCount = 0;
                     active = false;
-                    elementMain.className = 'inactive';
+                    elementMain.classList.add('inactive');
+                    elementMain.classList.remove('active');
                 }
             }
 
@@ -186,7 +207,8 @@
                 if (activeCount > activeThreshold) {
                     activeCount = 0;
                     active = true;
-                    elementMain.className = 'active';
+                    elementMain.classList.add('active');
+                    elementMain.classList.remove('inactive');
                 }
             }
         };
